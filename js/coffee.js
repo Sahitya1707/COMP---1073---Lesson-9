@@ -1,18 +1,56 @@
 const output = document.querySelector("#output");
 
 /* STEP 1: Instead of a constructor function, let's try a JavaScript class called 'Coffee' */
-function Coffee(size, isDecaf, qtyCream, qtySugar) {
-  this.size = size;
-  this.isDecaf = isDecaf;
-  this.qtyCream = qtyCream;
-  this.qtySugar = qtySugar;
-  this.description = function () {
-    output.textContent = `A ${this.size} ${this.isDecaf} coffee with ${this.qtyCream} creamers and ${this.qtySugar} teaspoons of sugar.`;
-  };
+class Coffee {
+  size;
+  isDecaf;
+  constructor(size, isDecaf) {
+    this.size = size;
+    this.isDecaf = isDecaf;
+  }
+  serveIt() {
+    // Generate image of coffee cup
+    const cup = document.createElement("img");
+    // set src for img element
+    let cupImage = "images/coffee-cup.svg";
+    // Determine weather a coffee is decaf or not
+    let decaf;
+    if (this.isDecaf === true) {
+      decaf = "decaffeinated";
+      cupImage = "images/coffee-cup-green.svg";
+    } else {
+      decaf = "caffeinated";
+    }
+
+    cup.setAttribute("src", cupImage);
+    // Set the IMG size according to coffee size
+    let cupSize;
+    switch (this.size) {
+      case "small":
+        cupSize = "100";
+        break;
+      case "medium":
+        cupSize = "125";
+        break;
+      case "large":
+        cupSize = "150";
+        break;
+      default:
+        cupSize = "100";
+    }
+    cup.setAttribute("height", cupSize);
+    // Generate description of coffee as IMG title
+    let description = ` A ${this.size} ${decaf} coffee.`;
+
+    cup.setAttribute("title", description);
+    //  insert img of coffee into page
+    output.appendChild(cup);
+  }
 }
 /* STEP 2: Instatiate a coffee based on the above constructor function */
-let scottsCoffee = new Coffee("extra large", false, 2, 1);
-console.log(scottsCoffee);
+let sahityaCoffee = new Coffee(`large`, false);
+let rukshaCoffee = new Coffee(`medium`, true);
+let quinnsCoffee = new Coffee("medium", false);
 /* STEP 3: Add a method to the Coffee class called serveIt() */
 
 /* STEP 4: Call up the serveIt() method */
